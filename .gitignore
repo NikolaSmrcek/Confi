@@ -1,0 +1,11 @@
+#Node modules
+node_modules
+#Potential log folder and files
+log/
+*.log
+#Web storm folder
+.idea/*
+#Compiled typescript - npm run prod
+dist
+#Modules lock
+package-lock.json

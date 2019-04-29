@@ -8,6 +8,13 @@
       "consoleErrors": false
     }
   },
+  "mongo": {
+    "uri": "mongodb+srv://nsmrcek:rockmongo@conficluster-ynate.mongodb.net/confi?retryWrites=true"
+  },
+  "mail": {
+    "user": "confi232311@gmail.com",
+    "password": "Confi1212!"
+  },
   "port": 5000,
   "logPath" : "./log",
   "loglevel" : "debug",

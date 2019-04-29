@@ -11,7 +11,7 @@ class ErrorHandler {
     this.DEFAULT_MESSAGE = 'Internal Server Error';
     this.CODE_TO_MESSAGE = {
       500: this.DEFAULT_MESSAGE,
-    }
+    };
   }
 
   public handleError (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {

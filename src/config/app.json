@@ -1,0 +1,15 @@
+{
+  "environments": {
+    "development": {
+      "environment": "development"
+    },
+    "production": {
+      "environment": "production",
+      "consoleErrors": false
+    }
+  },
+  "port": 5000,
+  "logPath" : "./log",
+  "loglevel" : "debug",
+  "consoleErrors": true
+}

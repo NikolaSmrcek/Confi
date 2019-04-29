@@ -1,9 +1,5 @@
-import * as express from 'express';
+import App from './app';
 
-const app = express();
+const app = new App();
 
-app.get('/', (request, response) => {
-  response.send('Hello world!');
-});
-
-app.listen(5000);
+app.listen();

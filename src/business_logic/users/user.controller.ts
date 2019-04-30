@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import * as _ from 'lodash';
 import config from '../../config/index';
 import EmailService from '../../services/email';
@@ -49,11 +50,13 @@ class UserController {
         return event.save();
       })
       .then((savedEvent) => {
+        const mongoId = mongoose.Types.ObjectId();
         const message = `Successfully applied for conference ${savedEvent.name} starting ${savedEvent.startDate}!`;
-        res.status(201).send({ message, status: 'success' });
+        const messageWithCode = `${message} Don't forget your code: ${mongoId}.`;
+        res.status(201).send({ message: messageWithCode, status: 'success' });
         const emailOptions = _.merge({} as any, this.emailOptionsTemplate);
         emailOptions.to = user.email;
-        emailOptions.text = `${message}. See you there!`;
+        emailOptions.text = `${messageWithCode}. See you there!`;
         return EmailService.sendMail(emailOptions);
       })
       .catch(next);

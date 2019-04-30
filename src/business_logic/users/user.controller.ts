@@ -1,6 +1,6 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import * as _ from 'lodash';
+import mongoose from 'mongoose';
 import config from '../../config/index';
 import EmailService from '../../services/email';
 import EventModel from '../events/event.model';

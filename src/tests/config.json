@@ -1,0 +1,17 @@
+{
+  "environments": {
+    "development": {
+      "uri": "http://127.0.0.1:5000",
+      "adminUser": {
+        "email": "admin@confi.com",
+        "password": "password"
+      },
+      "mongo": {
+        "uri": "mongodb+srv://nsmrcek:rockmongo@conficluster-ynate.mongodb.net/confi?retryWrites=true"
+      }
+    },
+    "production": {
+      "uri": "http://127.0.0.1:5000"
+    }
+  }
+}

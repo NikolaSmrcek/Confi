@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  app:
+    build: .
+    environment:
+      NODE_ENV: development
+    ports:
+      - '5000:5000'
+    volumes:
+      - .:/home/app/appDir
+      - /home/app/appDir/node_modules

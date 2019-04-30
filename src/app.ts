@@ -9,7 +9,7 @@ import config from './config/index';
 import logger from './logger/index';
 import Router from './router';
 import ErrorHandler from './utils/error_handler_utils';
-const swaggerDocument = YAML.load(path.join(__dirname, './swagger.yaml'));
+const swaggerDocument = YAML.load(path.join(__dirname, '../swagger.yaml'));
 
 class App {
   public app: express.Application;

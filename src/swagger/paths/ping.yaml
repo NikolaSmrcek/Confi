@@ -1,0 +1,16 @@
+get:
+  summary: Get response from server.
+  description: Returns a json object formatted with pong true.
+  responses:
+    200:
+      description: Server is alive check.
+      schema:
+        type: object
+        required:
+          - ping
+        properties:
+          ping:
+            type: object
+            properties:
+              pong:
+                type: boolean

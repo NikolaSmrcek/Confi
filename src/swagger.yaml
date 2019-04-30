@@ -1,0 +1,233 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Confi Api
+  description: API endpoints documentation. Note that they all begin with /api.
+tags:
+  - name: Admin endpoints
+    description: >-
+      There should be only accessible with logged in user. Setting for each of
+      endpoints request header "Cookie" to given value of the cookie
+      "Set-Cookie" from the successful login endpoint.
+schemes:
+  - http
+host: 'localhost:5000'
+basePath: /api
+paths:
+  /ping:
+    get:
+      summary: Get response from server.
+      description: Returns a json object formatted with pong true.
+      responses:
+        '200':
+          description: Server is alive check.
+          schema:
+            type: object
+            required:
+              - ping
+            properties:
+              ping:
+                type: object
+                properties:
+                  pong:
+                    type: boolean
+  /register:
+    post:
+      summary: Register user and sign him for conference.
+      description: >-
+        Makes user entry in mongo database, assigns him to conference and sends
+        mail.
+      parameters:
+        - in: body
+          name: user
+          description: User to create.
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: string
+              pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
+            phoneNumber:
+              type: string
+            address:
+              type: object
+              properties:
+                street:
+                  type: string
+                city:
+                  type: string
+                country:
+                  type: string
+      responses:
+        '201':
+          description: User created and assigned.
+          schema: &ref_0
+            type: object
+            required:
+              - message
+              - status
+            properties:
+              status:
+                type: number
+              message:
+                type: string
+        '400':
+          description: Something went wrong registrating user.
+          schema: *ref_0
+        '500':
+          description: Internal server error.
+          schema: *ref_0
+  /login:
+    post:
+      summary: >-
+        Logins user as admin returning jwt data in the header "Set-Cookie" which
+        has to be used in admin endpoints.
+      description: >-
+        Tries to login user with provided data returning jwt token in the
+        header.
+      parameters:
+        - in: body
+          name: user
+          description: User to login as admin.
+          properties:
+            email:
+              type: string
+              pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
+            password:
+              type: string
+          example:
+            email: admin@confi.com
+            password: password
+      responses:
+        '200':
+          description: User logged in.
+          headers:
+            X-Set-Cookie:
+              schema:
+                type: string
+                description: use for admin endpoints
+          schema:
+            type: object
+            required:
+              - status
+            properties:
+              status:
+                type: number
+        '400':
+          description: Something went wrong while loggin in.
+          schema: *ref_0
+        '500':
+          description: Internal server error.
+          schema: *ref_0
+  /admin/bookings:
+    get:
+      tags:
+        - Admin endpoints
+      summary: Get conference bookings (participants).
+      description: Returns a event json object.
+      parameters:
+        - in: header
+          name: Cookie
+          description: jwt token gained after login
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successfully found a conference data.
+          schema: &ref_1
+            type: object
+            required:
+              - _id
+              - name
+              - city
+              - __v
+              - startDate
+              - participants
+            properties:
+              _id:
+                type: string
+              name:
+                type: string
+              city:
+                type: string
+              __v:
+                type: number
+              startDate:
+                type: string
+              participants:
+                type: array
+                items: &ref_2
+                  type: object
+                  required:
+                    - _id
+                    - firstName
+                    - lastName
+                    - email
+                    - phoneNumber
+                  properties:
+                    _id:
+                      type: string
+                    firstName:
+                      type: string
+                    lastName:
+                      type: string
+                    email:
+                      type: string
+                    phoneNumber:
+                      type: string
+                    password:
+                      type: string
+                    isAdmin:
+                      type: boolean
+                    __v:
+                      type: number
+                    address:
+                      type: object
+                      properties:
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        street:
+                          type: string
+        '500':
+          description: Internal server error.
+          schema: *ref_0
+  '/admin/bookings/{userId}':
+    delete:
+      tags:
+        - Admin endpoints
+      summary: Removes user by id from conference.
+      description: >-
+        Removes user from conference in mongo database. Matches path parameter
+        is it mongo id.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+          required: true
+          description: user mongo id.
+        - in: header
+          name: Cookie
+          description: jwt token gained after login
+          schema:
+            type: string
+          required: true
+      responses:
+        '204':
+          description: Successfully removed user from conference.
+        '400':
+          description: Something went wrong while removing user from conference.
+          schema: *ref_0
+        '500':
+          description: Internal server error.
+          schema: *ref_0
+definitions:
+  Event: *ref_1
+  User: *ref_2
+

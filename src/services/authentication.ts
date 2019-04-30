@@ -33,7 +33,7 @@ class AuthenticationController {
         }
         user.password = undefined;
         const tokenData = this.createToken(user);
-        res.setHeader('Set-Cookie', [this.createCookie(tokenData)]);
+        res.setHeader('X-Set-Cookie', [this.createCookie(tokenData)]);
         return res.status(200).send({ status: 'success' });
       })
       .catch(next);

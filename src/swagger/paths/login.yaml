@@ -1,0 +1,39 @@
+post:
+  summary: Logins user as admin returning jwt data in the header "Set-Cookie" which has to be used in admin endpoints.
+  description: Tries to login user with provided data returning jwt token in the header.
+  parameters:
+    - in: body
+      name: user
+      description: User to login as admin.
+      properties:
+        email:
+          type: string
+          pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
+        password:
+          type: string
+      example:
+        email: 'admin@confi.com'
+        password: 'password'
+  responses:
+    200:
+      description: User logged in.
+      headers:
+        X-Set-Cookie:
+          schema:
+            type: string
+            description: use for admin endpoints
+      schema:
+        type: object
+        required:
+          - status
+        properties:
+          status:
+            type: number
+    400:
+      description: Something went wrong while loggin in.
+      schema:
+        $ref: ../definitions/response.yaml
+    500:
+      description: Internal server error.
+      schema:
+        $ref: ../definitions/response.yaml

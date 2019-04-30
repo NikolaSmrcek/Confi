@@ -1,0 +1,19 @@
+swagger: "2.0"
+
+info:
+  $ref: ./info/index.yaml
+
+tags:
+  - name: Admin endpoints
+    description: There should be only accessible with logged in user. Setting for each of endpoints request header "Cookie" to given value of the cookie "X-Set-Cookie" from the successful login endpoint.
+
+schemes:
+  - http
+host: localhost:5000
+basePath: /api
+
+paths:
+  $ref: ./paths/index.yaml
+
+definitions:
+  $ref: ./definitions/index.yaml

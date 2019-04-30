@@ -1,0 +1,39 @@
+post:
+  summary: Register user and sign him for conference.
+  description: Makes user entry in mongo database, assigns him to conference and sends mail.
+  parameters:
+    - in: body
+      name: user
+      description: User to create.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
+        phoneNumber:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            country:
+              type: string
+  responses:
+    201:
+      description: User created and assigned.
+      schema:
+        $ref: ../definitions/response.yaml
+    400:
+      description: Something went wrong registrating user.
+      schema:
+        $ref: ../definitions/response.yaml
+    500:
+      description: Internal server error.
+      schema:
+        $ref: ../definitions/response.yaml

@@ -1,0 +1,10 @@
+/ping:
+  $ref: ./ping.yaml
+/register:
+  $ref: ./register.yaml
+/login:
+  $ref: ./login.yaml
+/admin/bookings:
+  $ref: ./admin_bookings.yaml
+/admin/bookings/{userId}:
+  $ref: ./admin_delete_booking.yaml

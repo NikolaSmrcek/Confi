@@ -2,10 +2,14 @@ import * as bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import mongoose from 'mongoose';
+import swagger from 'swagger-ui-express';
+import path from 'path';
+import YAML from 'yamljs';
 import config from './config/index';
 import logger from './logger/index';
 import Router from './router';
 import ErrorHandler from './utils/error_handler_utils';
+const swaggerDocument = YAML.load(path.join(__dirname, './swagger.yaml'));
 
 class App {
   public app: express.Application;
@@ -27,6 +31,7 @@ class App {
     // Initializing routes
     this.router = new Router(this.app);
     this.router.init();
+    this.initSwaggerDocs();
     this.initializeErrorHandler();
   }
 
@@ -56,6 +61,12 @@ class App {
 
   private initializeErrorHandler () {
     this.app.use(this.errorHandler.handleError.bind(this.errorHandler));
+  }
+
+  private initSwaggerDocs () {
+    if (config.shouldLoadSwagger) {
+      this.app.use('/api-docs', swagger.serve, swagger.setup(swaggerDocument));
+    }
   }
 
   private connectToDatabase () {

@@ -1,0 +1,24 @@
+type:
+  object
+required:
+  - _id
+  - name
+  - city
+  - __v
+  - startDate
+  - participants
+properties:
+  _id:
+    type: string
+  name:
+    type: string
+  city:
+    type: string
+  __v:
+    type: number
+  startDate:
+    type: string
+  participants:
+    type: array
+    items:
+      $ref: ./user.yaml

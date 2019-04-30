@@ -5,7 +5,8 @@
     },
     "production": {
       "environment": "production",
-      "consoleErrors": false
+      "consoleErrors": false,
+      "shouldLoadSwagger": false
     }
   },
   "mongo": {
@@ -19,5 +20,6 @@
   "port": 5000,
   "logPath" : "./log",
   "loglevel" : "debug",
-  "consoleErrors": true
+  "consoleErrors": true,
+  "shouldLoadSwagger": true
 }

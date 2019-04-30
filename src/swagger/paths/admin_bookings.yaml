@@ -1,0 +1,21 @@
+get:
+  tags:
+    - Admin endpoints
+  summary: Get conference bookings (participants).
+  description: Returns a event json object.
+  parameters:
+    - in: header
+      name: Cookie
+      description: jwt token gained after login
+      schema:
+        type: string
+      required: true
+  responses:
+    200:
+      description: Successfully found a conference data.
+      schema:
+        $ref: ../definitions/event.yaml
+    500:
+      description: Internal server error.
+      schema:
+        $ref: ../definitions/response.yaml

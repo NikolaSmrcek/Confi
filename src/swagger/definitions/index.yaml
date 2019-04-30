@@ -1,0 +1,4 @@
+Event:
+  $ref: ./event.yaml
+User:
+  $ref: ./user.yaml

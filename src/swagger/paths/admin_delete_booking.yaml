@@ -1,0 +1,31 @@
+delete:
+  tags:
+    - Admin endpoints
+  summary: Removes user by id from conference.
+  description: Removes user from conference in mongo database. Matches path parameter is it mongo id.
+  parameters:
+    - in: path
+      name: userId
+      schema:
+        type: string
+        pattern: '^[0-9a-fA-F]{24}$'
+      required: true
+      description: user mongo id.
+    - in: header
+      name: Cookie
+      description: jwt token gained after login
+      schema:
+        type: string
+      required: true
+
+  responses:
+    204:
+      description: Successfully removed user from conference.
+    400:
+      description: Something went wrong while removing user from conference.
+      schema:
+        $ref: ../definitions/response.yaml
+    500:
+      description: Internal server error.
+      schema:
+        $ref: ../definitions/response.yaml

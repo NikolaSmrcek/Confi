@@ -1,4 +1,5 @@
 import * as bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import mongoose from 'mongoose';
 import config from './config/index';
@@ -37,6 +38,7 @@ class App {
 
   private initializeMiddlewares () {
     this.app.use(bodyParser.json());
+    this.app.use(cookieParser());
     this.app.use((req, res, next) => {
       function afterResponse() {
         res.removeListener('finish', afterResponse);

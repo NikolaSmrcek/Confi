@@ -15,6 +15,7 @@
     "user": "confi232311@gmail.com",
     "password": "Confi1212!"
   },
+  "jwt_secret": "JWT_SECRET",
   "port": 5000,
   "logPath" : "./log",
   "loglevel" : "debug",

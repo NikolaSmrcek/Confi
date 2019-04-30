@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import config from '../../config/index';
 import EmailService from '../../services/email';
 import EventModel from '../events/event.model';
+import RequestWithUser from '../middleware/auth.interface';
 import UserModel from './user.model';
 
 class UserController {
@@ -40,7 +41,6 @@ class UserController {
         return createdUser.save();
       })
       .then((savedUser) => {
-        // adding user to the event
         user = savedUser;
         return EventModel.findById(this.eventId);
       })
@@ -51,11 +51,18 @@ class UserController {
       .then((savedEvent) => {
         const message = `Successfully applied for conference ${savedEvent.name} starting ${savedEvent.startDate}!`;
         res.status(201).send({ message, status: 'success' });
-        let emailOptions = _.merge({} as any, this.emailOptionsTemplate);
+        const emailOptions = _.merge({} as any, this.emailOptionsTemplate);
         emailOptions.to = user.email;
         emailOptions.text = `${message}. See you there!`;
         return EmailService.sendMail(emailOptions);
       })
+      .catch(next);
+  }
+
+  public bookings(req: RequestWithUser, res: express.Response, next: express.NextFunction) {
+    return EventModel.findById(this.eventId)
+      .then(event => event.populate('participants').execPopulate())
+      .then(event => res.status(200).send(event))
       .catch(next);
   }
 
